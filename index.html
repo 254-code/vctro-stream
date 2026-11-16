@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+<title>VICTRO STREAM</title>
+<style>
+:root{--bg:#080b12;--panel:#111927;--panel2:#172233;--text:#f5f7fb;--muted:#aab5c5;--red:#ed2638;--gold:#f4c85d;--line:rgba(255,255,255,.1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,input{font:inherit}.wrap{width:min(1160px,calc(100% - 36px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(8,11,18,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:900;font-size:21px;letter-spacing:.5px;white-space:nowrap}.brand b{color:var(--red)}nav{display:flex;gap:25px;color:#d6dce6;font-size:14px}nav a:hover{color:#fff}.actions{display:flex;align-items:center;gap:10px}.search{width:170px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#111927;color:white}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.65;cursor:wait}.primary{background:var(--red);color:white}.secondary{background:#202b3b;color:white;border:1px solid var(--line)}.menu{display:none;background:transparent;color:white;border:0;font-size:24px}.account-email{display:none;color:#dce4ef;font-size:12px;max-width:145px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:8px 10px;border:1px solid var(--line);border-radius:9px}
+.hero{min-height:470px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(5,8,14,.98),rgba(5,8,14,.78),rgba(5,8,14,.25)),url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=85') center/cover}.hero-inner{padding:75px 0;max-width:650px}.eyebrow{color:#ff7884;font-weight:800;letter-spacing:2px;font-size:12px}.hero h1{font-size:clamp(38px,6vw,68px);line-height:.98;margin:18px 0}.hero h1 span{color:var(--red)}.hero p{color:#d0d7e2;line-height:1.7;max-width:580px}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+section{padding:55px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:22px}.section-head h2{font-size:30px;margin:0 0 8px}.section-head p,.muted{color:var(--muted);margin:0;line-height:1.6}.kicker{font-size:11px;color:#ff7884;font-weight:900;letter-spacing:1.7px;margin-bottom:8px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.quick a{padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:16px}.quick strong{display:block;font-size:17px;margin-bottom:7px}.quick span{color:var(--muted);font-size:13px;line-height:1.5}.icon{font-size:25px;margin-bottom:12px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.filter{background:#172233;border:1px solid var(--line);color:#dbe2ed;border-radius:30px;padding:9px 14px;cursor:pointer}.filter.active{background:var(--red);border-color:var(--red);color:white}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:.2s}.card:hover{transform:translateY(-4px);border-color:#65738a}.poster{height:190px;background:linear-gradient(135deg,#24364d,#101722);position:relative;overflow:hidden}.poster img{width:100%;height:100%;object-fit:cover;display:block}.poster:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.85))}.tag{position:absolute;z-index:1;top:12px;left:12px;background:var(--red);padding:6px 8px;border-radius:6px;font-size:10px;font-weight:900}.tag.gold{background:var(--gold);color:#151515}.poster-title{position:absolute;z-index:1;bottom:14px;left:14px;right:12px;font-weight:800;font-size:17px}.meta{padding:12px 14px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between}.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:14px}
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:25px}.plan{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:27px;display:flex;flex-direction:column}.plan.featured{border:1px solid var(--red);box-shadow:0 0 35px rgba(237,38,56,.12)}.plan-label{font-size:11px;font-weight:900;letter-spacing:1.5px;color:var(--muted)}.plan h3{font-size:26px;margin:10px 0}.price{font-size:34px;font-weight:900;margin:8px 0}.price small{font-size:13px;color:var(--muted);font-weight:400}.plan ul{padding-left:19px;color:#d2dae5;line-height:2;font-size:14px;margin:15px 0 25px}.plan .btn{margin-top:auto}.account-panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;margin-top:20px}.account-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.account-stat{background:#0d1420;border:1px solid var(--line);border-radius:12px;padding:15px}.account-stat small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}.account-stat strong{font-size:16px;overflow-wrap:anywhere}.account-help{color:var(--muted);font-size:13px;line-height:1.6;margin-top:16px}.account-message{font-size:13px;color:var(--muted);margin-top:12px}.membership-extra{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.membership-box{background:#0d1420;border:1px solid var(--line);border-radius:12px;padding:15px}.membership-box small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}.membership-box strong{font-size:14px;overflow-wrap:anywhere}.profile-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.profile-form input,.admin-tools input,.admin-tools select,.admin-row select,.admin-row input{min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:#0d1420;color:white}.profile-form input{flex:1;min-width:180px}.admin-panel{margin-top:24px;border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:22px}.admin-list{display:grid;gap:12px;margin-top:16px}.admin-row{display:grid;grid-template-columns:minmax(150px,1.5fr) minmax(100px,.7fr) minmax(100px,.7fr) minmax(145px,1fr) auto;gap:9px;align-items:center;padding:12px;background:#0d1420;border:1px solid var(--line);border-radius:12px}.admin-row .admin-user{min-width:0;overflow-wrap:anywhere}.admin-row small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.admin-note{color:var(--muted);font-size:13px;line-height:1.6}.status-pill{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:5px 9px;font-size:11px;color:#cdd6e3}.admin-tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.admin-tools input{flex:1;min-width:190px}.disclaimer{text-align:center;color:var(--muted);font-size:12px;line-height:1.6;margin:18px auto 0;max-width:760px}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13px}.footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:20;align-items:center;justify-content:center;padding:20px;overflow-y:auto}.modal.show{display:flex}.modal-box{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:25px;max-width:440px;width:100%;max-height:calc(100vh - 40px);overflow-y:auto}.modal-box h3{margin-top:0;font-size:24px}.modal-box p{color:var(--muted);line-height:1.6}.close{float:right;background:transparent;border:0;color:white;font-size:24px;cursor:pointer}.auth-tabs{display:flex;gap:8px;margin:16px 0}.auth-tab{flex:1;padding:10px;border-radius:9px;border:1px solid var(--line);background:#101927;color:#dce4ef;cursor:pointer;font-weight:700}.auth-tab.active{background:var(--red);border-color:var(--red);color:white}.field{display:block;margin:13px 0}.field span{display:block;font-size:13px;color:#dce4ef;margin-bottom:7px}.field input{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#0d1420;color:white;outline:none}.field input:focus{border-color:var(--red)}.auth-submit{width:100%;margin-top:10px}.auth-message{font-size:13px;min-height:20px;margin:12px 0;color:#ffd0d4}.auth-message.success{color:#a8edc0}.auth-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:13px}.text-button{border:0;background:none;color:#ff8993;padding:0;cursor:pointer;text-decoration:underline}.hidden{display:none!important}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,1fr)}nav{gap:13px}.search{width:130px}}
+@media(max-width:650px){.account-grid{grid-template-columns:1fr}.membership-extra{grid-template-columns:1fr}.admin-row{grid-template-columns:1fr 1fr}.admin-row .admin-user{grid-column:1/-1}.admin-row .admin-save{grid-column:1/-1}.nav{min-height:64px;flex-wrap:wrap;padding:10px 0}.menu{display:block}.nav nav{display:none;position:absolute;top:64px;left:0;right:0;background:#0d1420;padding:20px;flex-direction:column;border-bottom:1px solid var(--line)}nav.open{display:flex}.search{display:none}.actions .account-email{max-width:90px}.actions{gap:7px}.actions .btn{padding:10px 11px;font-size:12px}.hero{min-height:430px}.hero-inner{padding:60px 0}.quick{grid-template-columns:1fr}.plans{grid-template-columns:1fr}section{padding:40px 0}.section-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:390px){.brand{font-size:18px}.cards{gap:10px}.poster{height:150px}.poster-title{font-size:14px}.meta{font-size:10px;padding:10px}.actions .btn{padding:9px 8px}}
+
+/* Movies catalogue upgrade */
+.movie-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0}
+.movie-tools input,.movie-tools select{padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#0d1420;color:white;min-width:170px}
+.movie-tools input{flex:1}
+.movie-card{position:relative}
+.movie-card .poster{height:230px}
+.movie-card .meta{align-items:center;gap:8px}
+.movie-card .meta button{padding:7px 9px;font-size:11px;border-radius:8px}
+.movie-description{color:var(--muted);font-size:13px;line-height:1.6;margin:8px 0 0}
+.watchlist-panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px}
+.watchlist-items{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.watchlist-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#0d1420;border:1px solid var(--line);border-radius:11px;padding:12px}
+.watchlist-item strong{font-size:13px}
+.watchlist-empty{color:var(--muted);font-size:13px;line-height:1.6}
+.movie-status{font-size:11px;color:var(--muted);margin-top:8px}
+@media(max-width:650px){.movie-card .poster{height:175px}.watchlist-items{grid-template-columns:1fr}.movie-tools input,.movie-tools select{width:100%;min-width:0}}
+
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="brand" href="#home">VICTRO <b>STREAM</b></a>
+<nav id="nav"><a href="#home">Home</a><a href="#football">Football</a><a href="#movies">Movies</a><a href="#plans">Membership</a><a href="#accountDashboard" id="accountNav" class="hidden">My account</a></nav>
+<div class="actions"><input class="search" id="search" type="search" placeholder="Search content..." aria-label="Search content"><span class="account-email" id="accountEmail"></span><button class="btn secondary" id="signIn">Sign in</button><button class="btn secondary hidden" id="signOut">Sign out</button><a class="btn primary" id="joinNow" href="#plans">Join now</a><button class="menu" id="menu" aria-label="Open navigation">☰</button></div>
+</div></header>
+<main id="home">
+<div class="hero"><div class="wrap"><div class="hero-inner"><div class="eyebrow">YOUR ENTERTAINMENT HUB</div><h1>THE GAME.<br>THE <span>STORY.</span><br>YOUR SCREEN.</h1><p>Football excitement and movie nights come together in one place. Explore match-day features, discover films and choose the membership that suits you.</p><div class="hero-buttons"><a class="btn primary" href="#football">Explore football →</a><a class="btn secondary" href="#movies">Discover movies</a></div></div></div></div>
+<section class="wrap"><div class="section-head"><div><h2>Explore VICTRO</h2><p>Everything you enjoy, organised in one place.</p></div></div><div class="quick"><a href="#football"><div class="icon">⚽</div><strong>Football zone</strong><span>Match centre, highlights and football stories.</span></a><a href="#movies"><div class="icon">🎬</div><strong>Movies & series</strong><span>Browse genres and curated entertainment.</span></a><a href="#plans"><div class="icon">✦</div><strong>Membership plans</strong><span>Compare Free and Premium options.</span></a></div></section>
+<section class="wrap" id="football"><div class="section-head"><div><div class="kicker">THE FOOTBALL ZONE</div><h2>Football centre</h2><p>Explore match-day features, highlights and club stories.</p></div></div><div class="filters" data-filter-group="football"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="highlights">Highlights</button><button class="filter" data-filter="features">Features</button><button class="filter" data-filter="clubs">Club stories</button></div>
+<div class="cards">
+<article class="card" data-category="highlights" data-title="The best moments"><div class="poster"><img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=700&q=80" alt="Football pitch" onerror="this.style.display='none'"><span class="tag">HIGHLIGHTS</span><div class="poster-title">The best moments</div></div><div class="meta"><span>Official highlights</span><span>Preview</span></div></article>
+<article class="card" data-category="features" data-title="Inside the stadium"><div class="poster"><img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=700&q=80" alt="Stadium" onerror="this.style.display='none'"><span class="tag gold">FEATURE</span><div class="poster-title">Inside the stadium</div></div><div class="meta"><span>Football stories</span><span>Preview</span></div></article>
+<article class="card" data-category="clubs" data-title="Club legends"><div class="poster"><img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=700&q=80" alt="Football stadium" onerror="this.style.display='none'"><span class="tag">CLUB STORY</span><div class="poster-title">Club legends</div></div><div class="meta"><span>Documentary</span><span>Preview</span></div></article>
+<article class="card" data-category="features" data-title="The fans"><div class="poster"><img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=700&q=80" alt="Football fans" onerror="this.style.display='none'"><span class="tag gold">FEATURE</span><div class="poster-title">The fans</div></div><div class="meta"><span>Fan culture</span><span>Preview</span></div></article>
+</div><p class="note">These are sample content cards, not live broadcasts. Live matches and clips can only be added through broadcasters, leagues or rights holders that authorise distribution.</p></section>
+<section class="wrap" id="movies">
+<div class="section-head"><div><div class="kicker">MOVIES & ENTERTAINMENT</div><h2>Find your next watch</h2><p>Explore curated sample collections and save titles to your watchlist.</p></div></div>
+<div class="movie-tools">
+  <input id="movieSearch" type="search" placeholder="Search movie collections..." aria-label="Search movie collections">
+  <select id="movieSort" aria-label="Sort movie collections">
+    <option value="featured">Featured first</option>
+    <option value="az">Title A–Z</option>
+    <option value="za">Title Z–A</option>
+  </select>
+</div>
+<div class="filters" id="movieFilters" data-filter-group="movies">
+  <button class="filter active" data-filter="all">All</button>
+  <button class="filter" data-filter="action">Action</button>
+  <button class="filter" data-filter="drama">Drama</button>
+  <button class="filter" data-filter="documentary">Documentary</button>
+  <button class="filter" data-filter="african">African stories</button>
+  <button class="filter" data-filter="comedy">Comedy</button>
+  <button class="filter" data-filter="family">Family</button>
+  <button class="filter" data-filter="thriller">Thriller</button>
+  <button class="filter" data-filter="animation">Animation</button>
+</div>
+<div class="cards" id="movieGrid">
+  <article class="card movie-card" data-category="action" data-title="Action collection" data-movie-id="action-collection" data-description="A sample collection for fast-paced action and adventure titles. Actual films will appear here when authorised distribution rights and playback sources are connected.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1489599849927-2ee91c7c8d5b?auto=format&fit=crop&w=700&q=80" alt="Cinema seats" loading="lazy"><span class="tag">ACTION</span><div class="poster-title">Action collection</div></div>
+    <div class="meta"><span>Action · Adventure</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="drama" data-title="Stories that move us" data-movie-id="drama-stories" data-description="A sample drama collection for character-led stories and emotional journeys. Film availability depends on licensing.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=700&q=80" alt="Movie theatre" loading="lazy"><span class="tag gold">DRAMA</span><div class="poster-title">Stories that move us</div></div>
+    <div class="meta"><span>Drama · Fiction</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="documentary" data-title="True stories" data-movie-id="true-stories" data-description="A sample documentary collection for factual films, biographies, nature and real-world stories.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=700&q=80" alt="Film camera" loading="lazy"><span class="tag">DOCS</span><div class="poster-title">True stories</div></div>
+    <div class="meta"><span>Documentary</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="african" data-title="African spotlight" data-movie-id="african-spotlight" data-description="A dedicated space for licensed African cinema, independent filmmakers and regional stories.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=700&q=80" alt="Cinema screen" loading="lazy"><span class="tag gold">AFRICAN</span><div class="poster-title">African spotlight</div></div>
+    <div class="meta"><span>African stories</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="comedy" data-title="Laugh out loud" data-movie-id="laugh-out-loud" data-description="A sample comedy collection for light-hearted films and family-friendly laughs.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=700&q=80" alt="Cinema auditorium" loading="lazy"><span class="tag">COMEDY</span><div class="poster-title">Laugh out loud</div></div>
+    <div class="meta"><span>Comedy</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="family" data-title="Family movie time" data-movie-id="family-time" data-description="A sample collection area for family viewing and age-appropriate entertainment.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1514306191717-452ec28c7814?auto=format&fit=crop&w=700&q=80" alt="Cinema screen and seats" loading="lazy"><span class="tag gold">FAMILY</span><div class="poster-title">Family movie time</div></div>
+    <div class="meta"><span>Family</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="thriller" data-title="Edge of your seat" data-movie-id="edge-seat" data-description="A sample thriller collection for suspense and mystery titles, subject to content ratings and licensing.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80" alt="Misty cinematic landscape" loading="lazy"><span class="tag">THRILLER</span><div class="poster-title">Edge of your seat</div></div>
+    <div class="meta"><span>Thriller · Mystery</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+  <article class="card movie-card" data-category="animation" data-title="Animation station" data-movie-id="animation-station" data-description="A sample animation collection for animated films and creative storytelling.">
+    <div class="poster"><img src="https://images.unsplash.com/photo-1535016120720-40c646be5580?auto=format&fit=crop&w=700&q=80" alt="Colourful cinema display" loading="lazy"><span class="tag gold">ANIMATION</span><div class="poster-title">Animation station</div></div>
+    <div class="meta"><span>Animation</span><button class="btn secondary watch-toggle" type="button">＋ Watchlist</button></div>
+  </article>
+</div>
+<p class="note">These are sample collection cards, not playable films. VICTRO STREAM will only list films it has permission to distribute. Movie playback, trailers and subtitle tracks will be connected after authorised sources are available.</p>
+<div class="watchlist-panel" id="watchlist">
+  <div class="section-head"><div><div class="kicker">YOUR SAVED TITLES</div><h2>My watchlist</h2><p>Save collections you want to find again on this browser.</p></div></div>
+  <div id="watchlistItems" class="watchlist-items"><p class="watchlist-empty">Your watchlist is empty. Use the ＋ Watchlist buttons above to save a collection.</p></div>
+  <p class="movie-status">This first version saves your watchlist on this device only. Cross-device syncing will be added when the Firestore watchlist feature is configured.</p>
+</div>
+</section>
+<section class="wrap" id="plans"><div class="section-head"><div><div class="kicker">MEMBERSHIP</div><h2>Choose your VICTRO plan</h2><p>Simple options for different viewing needs.</p></div></div><div class="plans">
+<div class="plan"><div class="plan-label">GET STARTED</div><h3>Free</h3><div class="price">KES 0 <small>/ month</small></div><p class="muted">Explore the platform at no cost.</p><ul><li>Browse football and movie catalogues</li><li>Access free authorised content</li><li>Discover featured collections</li><li>View membership updates</li></ul><button class="btn secondary choose" data-plan="Free">Choose Free</button></div>
+<div class="plan featured"><div class="plan-label">MORE TO EXPLORE</div><h3>Premium</h3><div class="price">Coming soon</div><p class="muted">A future upgrade for expanded access.</p><ul><li>All Free plan features</li><li>More authorised premium content</li><li>Potential ad-free viewing</li><li>Premium collections and features</li></ul><button class="btn primary choose" data-plan="Premium">Explore Premium</button></div>
+</div><p class="disclaimer">Plans are proposed and for demonstration only. No subscription or payment is active yet. Pricing and features will be confirmed before launch.</p></section>
+<section class="wrap hidden" id="accountDashboard"><div class="section-head"><div><div class="kicker">YOUR ACCOUNT</div><h2>Membership dashboard</h2><p>Manage your profile and view your current membership.</p></div></div>
+ <div class="account-panel"><p class="muted" id="dashboardIntro">Loading your account...</p>
+  <div class="account-grid"><div class="account-stat"><small>Signed-in email</small><strong id="profileEmail">—</strong></div><div class="account-stat"><small>Current plan</small><strong id="profilePlan">—</strong></div><div class="account-stat"><small>Account status</small><strong id="profileStatus">—</strong></div></div>
+  <div class="membership-extra"><div class="membership-box"><small>Membership started</small><strong id="membershipStart">Not set</strong></div><div class="membership-box"><small>Membership ends</small><strong id="membershipEnd">No expiry recorded</strong></div></div>
+  <p class="account-help" id="membershipNote">Your plan and status are read from your saved account profile. Premium access requires a trusted administrator to verify and activate it.</p>
+  <form class="profile-form" id="profileForm"><input id="displayNameInput" maxlength="60" placeholder="Your display name" aria-label="Your display name"><button class="btn secondary" type="submit" id="saveProfile">Save profile</button></form>
+  <p class="account-message" id="profileMessage" role="status" aria-live="polite"></p>
+ </div>
+ <div class="admin-panel hidden" id="adminPanel"><div class="section-head"><div><div class="kicker">SECURE MANAGEMENT</div><h2>Administrator dashboard</h2><p>Membership controls for verified administrators only.</p></div><span class="status-pill" id="adminBadge">Admin access checking</span></div>
+  <p class="admin-note" id="adminNote">Checking administrator permissions...</p>
+  <div id="adminControls" class="hidden"><div class="admin-tools"><input id="adminSearch" type="search" placeholder="Find a user by email"><button class="btn secondary" type="button" id="refreshUsers">Refresh users</button></div><div class="admin-list" id="adminUsers"></div></div>
+ </div>
+</section>
+</main>
+<footer><div class="wrap footer-row"><span><strong>VICTRO STREAM</strong> · Football, films and entertainment</span><span>© <span id="year"></span> VICTRO STREAM. All rights reserved.</span></div></footer>
+
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+ <div class="modal-box">
+  <button class="close" id="authClose" aria-label="Close">×</button>
+  <h3 id="authTitle">Welcome to VICTRO STREAM</h3>
+  <p id="authIntro">Sign in to your account or create a new one.</p>
+  <div class="auth-tabs"><button class="auth-tab active" id="loginTab" type="button">Sign in</button><button class="auth-tab" id="registerTab" type="button">Create account</button></div>
+  <form id="authForm">
+   <label class="field"><span>Email address</span><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+   <label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="6" required></label>
+   <label class="field hidden" id="confirmField"><span>Confirm password</span><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Repeat your password" minlength="6"></label>
+   <button class="btn primary auth-submit" id="authSubmit" type="submit">Sign in</button>
+  </form>
+  <div class="auth-links"><button class="text-button" id="forgotPassword" type="button">Forgot password?</button><button class="text-button" id="switchMode" type="button">Create an account</button></div>
+  <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+ </div>
+</div>
+<div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle"><div class="modal-box"><button class="close" id="infoClose" aria-label="Close">×</button><h3 id="infoTitle">Notice</h3><p id="infoText"></p><button class="btn primary" id="infoOk">Got it</button></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+$('#year').textContent=new Date().getFullYear();
+$('#menu').addEventListener('click',()=>$('#nav').classList.toggle('open'));
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>$('#nav').classList.remove('open')));
+function showInfo(title,message){$('#infoTitle').textContent=title;$('#infoText').textContent=message;$('#infoModal').classList.add('show')}
+function hideInfo(){$('#infoModal').classList.remove('show')}
+$('#infoClose').addEventListener('click',hideInfo);$('#infoOk').addEventListener('click',hideInfo);
+$('#infoModal').addEventListener('click',e=>{if(e.target===$('#infoModal'))hideInfo()});
+
+const firebaseConfig = {
+ apiKey: "AIzaSyCKksrYza7cJ39FMi7I-zfABa7xH9oFB2I",
+ authDomain: "victro-stream.firebaseapp.com",
+ projectId: "victro-stream",
+ storageBucket: "victro-stream.firebasestorage.app",
+ messagingSenderId: "731778519454",
+ appId: "1:731778519454:web:da5d873c69b47813ad468f",
+ measurementId: "G-3ERYDQR9ZY"
+};
+let auth=null, db=null, authReady=false, dbReady=false;
+try{
+ if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+ auth=firebase.auth();
+ db=firebase.firestore();
+ authReady=true; dbReady=true;
+}catch(error){console.error('Firebase setup error:',error)}
+let mode='login';
+function setMessage(message,kind='error'){const el=$('#authMessage');el.textContent=message;el.className='auth-message'+(kind==='success'?' success':'')}
+function setMode(next){
+ mode=next;const register=mode==='register';
+ $('#loginTab').classList.toggle('active',!register);$('#registerTab').classList.toggle('active',register);
+ $('#confirmField').classList.toggle('hidden',!register);$('#confirmPassword').required=register;
+ $('#password').autocomplete=register?'new-password':'current-password';
+ $('#authSubmit').textContent=register?'Create account':'Sign in';
+ $('#authTitle').textContent=register?'Create your VICTRO account':'Sign in to VICTRO STREAM';
+ $('#authIntro').textContent=register?'Use your email address and create a password of at least 6 characters.':'Enter the email address and password for your account.';
+ $('#forgotPassword').classList.toggle('hidden',register);$('#switchMode').textContent=register?'I already have an account':'Create an account';setMessage('');
+}
+function openAuth(next='login'){setMode(next);$('#authModal').classList.add('show')}
+function closeAuth(){$('#authModal').classList.remove('show')}
+$('#signIn').addEventListener('click',()=>openAuth('login'));
+$('#joinNow').addEventListener('click',e=>{e.preventDefault();if(auth&&auth.currentUser){document.querySelector('#plans').scrollIntoView({behavior:'smooth'});return}openAuth('register')});
+$('#authClose').addEventListener('click',closeAuth);
+$('#authModal').addEventListener('click',e=>{if(e.target===$('#authModal'))closeAuth()});
+$('#loginTab').addEventListener('click',()=>setMode('login'));$('#registerTab').addEventListener('click',()=>setMode('register'));
+$('#switchMode').addEventListener('click',()=>setMode(mode==='login'?'register':'login'));
+function friendlyError(error){
+ const code=error&&error.code?error.code:'';
+ const messages={
+ 'auth/email-already-in-use':'That email already has an account. Try signing in instead.',
+ 'auth/invalid-email':'Please enter a valid email address.','auth/weak-password':'Choose a stronger password with at least 6 characters.',
+ 'auth/user-not-found':'No account was found with that email. Create an account first.','auth/wrong-password':'The password is incorrect. Try again or reset it.',
+ 'auth/invalid-credential':'The email or password is incorrect. Check them and try again.','auth/too-many-requests':'Too many attempts. Please wait a little and try again.',
+ 'auth/network-request-failed':'Network connection problem. Check your internet and try again.',
+ 'auth/operation-not-allowed':'Email and password sign-in is not enabled in Firebase Authentication.',
+ 'auth/unauthorized-domain':'This website domain is not authorised in Firebase. Add its domain under Authentication settings.',
+ 'permission-denied':'Firestore blocked this profile action. Check that the published users/{userId} rules match the instructions.'
+ };
+ return messages[code]||((error&&error.message)||'Something went wrong. Please try again.');
+}
+// User profiles are created as Free. Paid membership fields are changed only by a verified admin.
+async function ensureUserProfile(user,isNewUser){
+ if(!dbReady||!db) throw new Error('Firestore is not available. Reload the page and try again.');
+ const ref=db.collection('users').doc(user.uid);
+ const snapshot=await ref.get();
+ if(!snapshot.exists){
+  await ref.set({uid:user.uid,email:user.email||'',displayName:user.displayName||'',plan:'Free',accountStatus:'active',createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+ }else if(isNewUser){
+  await ref.set({email:user.email||'',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+ }
+}
+function displayDate(value){
+ if(!value)return 'Not set';
+ const date=typeof value.toDate==='function'?value.toDate():new Date(value);
+ return Number.isNaN(date.getTime())?'Not set':date.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+}
+function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function loadMembershipDashboard(user){
+ const panel=$('#accountDashboard'),navLink=$('#accountNav');
+ if(!user){panel.classList.add('hidden');navLink.classList.add('hidden');$('#adminPanel').classList.add('hidden');return}
+ panel.classList.remove('hidden');navLink.classList.remove('hidden');
+ $('#dashboardIntro').textContent='Loading your saved membership details...';$('#profileEmail').textContent=user.email||'—';$('#profilePlan').textContent='Loading...';$('#profileStatus').textContent='Loading...';$('#profileMessage').textContent='';
+ try{
+  const snap=await db.collection('users').doc(user.uid).get();
+  if(!snap.exists){$('#profilePlan').textContent='Not set';$('#profileStatus').textContent='Profile missing';$('#dashboardIntro').textContent='Your sign-in is active, but your membership profile is missing.';$('#profileMessage').textContent='Sign out and sign in again. If this continues, check Firestore Rules.';return}
+  const data=snap.data()||{};
+  $('#profileEmail').textContent=data.email||user.email||'—';$('#profilePlan').textContent=data.plan||'Free';$('#profileStatus').textContent=data.accountStatus||'Active';$('#membershipStart').textContent=displayDate(data.membershipStart||data.createdAt);$('#membershipEnd').textContent=data.membershipEnd?displayDate(data.membershipEnd):'No expiry recorded';$('#displayNameInput').value=data.displayName||user.displayName||'';
+  $('#dashboardIntro').textContent='Welcome to your VICTRO STREAM account.';
+  $('#membershipNote').textContent=(data.plan==='Premium'&&data.accountStatus==='active')?'Your profile records an active Premium membership. Access to each title still depends on valid content licences and playback permissions.':'You are currently on the Free plan, or your Premium membership is not active. Premium can only be enabled by a verified administrator after the required checks.';
+  await checkAdminAccess(user);
+ }catch(error){console.error('Membership dashboard error:',error);$('#dashboardIntro').textContent='Your account is signed in, but membership details could not be loaded.';$('#profileMessage').textContent=error.code==='permission-denied'?'Firestore rules blocked access. Publish the secure rules supplied with this update.':(error.message||'Please reload and try again.');$('#profilePlan').textContent='Unavailable';$('#profileStatus').textContent='Unavailable'}
+}
+async function checkAdminAccess(user){
+ const panel=$('#adminPanel');panel.classList.remove('hidden');$('#adminControls').classList.add('hidden');$('#adminBadge').textContent='Checking';
+ try{
+  const token=await user.getIdTokenResult(true);
+  if(token.claims&&token.claims.admin===true){$('#adminBadge').textContent='Verified administrator';$('#adminNote').textContent='Administrator access verified. You can view users and manage membership status.';$('#adminControls').classList.remove('hidden');await loadAdminUsers();}
+  else{$('#adminBadge').textContent='Restricted';$('#adminNote').textContent='This account does not have the trusted administrator permission. Admin access cannot be enabled from this page; it must be assigned securely by the project owner using Firebase Admin SDK.';}
+ }catch(error){$('#adminBadge').textContent='Unavailable';$('#adminNote').textContent='Could not verify administrator permissions. '+(error.message||'Try refreshing the page.');}
+}
+let adminUserCache=[];
+async function loadAdminUsers(){
+ const list=$('#adminUsers');list.innerHTML='<p class="admin-note">Loading users...</p>';
+ try{
+  const snap=await db.collection('users').limit(100).get();adminUserCache=snap.docs.map(doc=>({id:doc.id,...doc.data()}));renderAdminUsers();
+ }catch(error){list.innerHTML='<p class="admin-note">Could not load users. Check that Firestore rules allow verified admins to read the users collection. '+safeText(error.message)+'</p>';}
+}
+function renderAdminUsers(){
+ const q=$('#adminSearch').value.trim().toLowerCase();const list=$('#adminUsers');
+ const rows=adminUserCache.filter(u=>(u.email||'').toLowerCase().includes(q)||(u.displayName||'').toLowerCase().includes(q));
+ if(!rows.length){list.innerHTML='<p class="admin-note">No matching users found.</p>';return}
+ list.innerHTML=rows.map(u=>`<div class="admin-row" data-user-id="${safeText(u.id)}"><div class="admin-user"><strong>${safeText(u.displayName||'Member')}</strong><small>${safeText(u.email||u.id)}</small></div><select class="admin-plan" aria-label="Membership plan"><option value="Free" ${u.plan==='Free'?'selected':''}>Free</option><option value="Premium" ${u.plan==='Premium'?'selected':''}>Premium</option></select><select class="admin-status" aria-label="Account status"><option value="active" ${u.accountStatus==='active'?'selected':''}>Active</option><option value="suspended" ${u.accountStatus==='suspended'?'selected':''}>Suspended</option></select><input class="admin-end" type="date" aria-label="Premium end date" value="${u.membershipEnd&&typeof u.membershipEnd.toDate==='function'?u.membershipEnd.toDate().toISOString().slice(0,10):''}"><button class="btn primary admin-save" type="button">Save membership</button></div>`).join('');
+ list.querySelectorAll('.admin-save').forEach(btn=>btn.addEventListener('click',async()=>{
+  const row=btn.closest('.admin-row'),uid=row.dataset.userId,plan=row.querySelector('.admin-plan').value,status=row.querySelector('.admin-status').value,endValue=row.querySelector('.admin-end').value;
+  if(uid===auth.currentUser.uid&&status==='suspended'){showInfo('Action blocked','You cannot suspend your own administrator account from this panel.');return}
+  if(plan==='Premium'&&status==='active'&&!endValue){showInfo('Expiry required','Set an end date before activating Premium.');return}
+  btn.disabled=true;btn.textContent='Saving...';
+  try{
+   const update={plan,accountStatus:status,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),membershipUpdatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+   if(plan==='Premium'&&endValue){update.membershipStart=firebase.firestore.FieldValue.serverTimestamp();update.membershipEnd=firebase.firestore.Timestamp.fromDate(new Date(endValue+'T23:59:59'));}
+   else{update.membershipEnd=null;}
+   await db.collection('users').doc(uid).update(update);showInfo('Membership updated','The selected user membership has been updated.');await loadAdminUsers();
+  }catch(error){showInfo('Could not update membership',error.code==='permission-denied'?'Firestore denied this action. Confirm the account has the trusted admin claim and the updated rules are published.':error.message||'Please try again.');}
+  finally{btn.disabled=false;btn.textContent='Save membership'}
+ }));
+}
+$('#adminSearch').addEventListener('input',renderAdminUsers);$('#refreshUsers').addEventListener('click',loadAdminUsers);
+$('#profileForm').addEventListener('submit',async e=>{
+ e.preventDefault();const user=auth&&auth.currentUser;if(!user)return;const name=$('#displayNameInput').value.trim();if(name.length>60){$('#profileMessage').textContent='Display name must be 60 characters or fewer.';return}
+ const btn=$('#saveProfile');btn.disabled=true;btn.textContent='Saving...';
+ try{await db.collection('users').doc(user.uid).update({displayName:name,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});$('#profileMessage').textContent='Profile updated successfully.';}
+ catch(error){$('#profileMessage').textContent=error.code==='permission-denied'?'Profile update blocked by Firestore Rules. Publish the secure rules supplied with this update.':(error.message||'Could not save profile.');}
+ finally{btn.disabled=false;btn.textContent='Save profile'}
+});
+
+$('#authForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!authReady||!auth){setMessage('Firebase could not start. Check your internet connection and reload the page.');return}
+ const email=$('#email').value.trim(),password=$('#password').value,confirm=$('#confirmPassword').value,submit=$('#authSubmit');
+ if(mode==='register'&&password!==confirm){setMessage('The passwords do not match.');return}
+ submit.disabled=true;submit.textContent=mode==='register'?'Creating account...':'Signing in...';setMessage('');
+ try{
+  let credential;
+  if(mode==='register'){
+   credential=await auth.createUserWithEmailAndPassword(email,password);
+   try{await ensureUserProfile(credential.user,true);setMessage('Account created and profile saved successfully.','success')}
+   catch(profileError){console.error('Profile save error:',profileError);setMessage('Your account was created, but the profile could not be saved. Check Firestore Rules and try signing out and back in.','error')}
+  }else{
+   credential=await auth.signInWithEmailAndPassword(email,password);
+   try{await ensureUserProfile(credential.user,false);setMessage('You are signed in. Your profile is ready.','success')}
+   catch(profileError){console.error('Profile load/save error:',profileError);setMessage('You are signed in, but Firestore could not load or save your profile. Check Firestore Rules.','error')}
+  }
+  if($('#authMessage').classList.contains('success'))setTimeout(closeAuth,1100);
+ }catch(error){setMessage(friendlyError(error))}
+ finally{submit.disabled=false;submit.textContent=mode==='register'?'Create account':'Sign in'}
+});
+$('#forgotPassword').addEventListener('click',async()=>{
+ if(!authReady||!auth){setMessage('Firebase is not ready. Reload the page and try again.');return}
+ const email=$('#email').value.trim();if(!email){setMessage('Enter your email address first, then choose Forgot password.');return}
+ try{await auth.sendPasswordResetEmail(email);setMessage('Password reset email sent. Check your inbox.','success')}
+ catch(error){setMessage(friendlyError(error))}
+});
+$('#signOut').addEventListener('click',async()=>{try{await auth.signOut();showInfo('Signed out','You have signed out of VICTRO STREAM.')}catch(error){showInfo('Could not sign out',friendlyError(error))}});
+if(authReady){auth.onAuthStateChanged(user=>{
+ if(user){$('#accountEmail').textContent=user.email||'Signed in';$('#accountEmail').style.display='inline-block';$('#signIn').classList.add('hidden');$('#signOut').classList.remove('hidden');$('#joinNow').textContent='My account';$('#joinNow').href='#accountDashboard';loadMembershipDashboard(user)}
+ else{$('#accountEmail').style.display='none';$('#signIn').classList.remove('hidden');$('#signOut').classList.add('hidden');$('#joinNow').textContent='Join now';$('#joinNow').href='#plans';loadMembershipDashboard(null)}
+})}
+$$('.choose').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.plan==='Free'){if(auth&&auth.currentUser){document.querySelector('#accountDashboard').scrollIntoView({behavior:'smooth'});showInfo('Free plan','Your account profile shows your current plan. No change is needed to remain on Free.')}else{openAuth('register')}}else{showInfo('Premium coming soon','Premium is not available for purchase or activation yet. No payment is taken, and selecting this option does not change your account.')}}));
+$$('[data-filter-group]').forEach(group=>group.addEventListener('click',e=>{const b=e.target.closest('.filter');if(!b)return;$$('.filter',group).forEach(x=>x.classList.toggle('active',x===b));const section=group.closest('section');$$('.card',section).forEach(c=>c.style.display=b.dataset.filter==='all'||c.dataset.category===b.dataset.filter?'':'none')}));
+$('#search').addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();$$('.card').forEach(c=>c.style.display=(c.dataset.title||'').toLowerCase().includes(q)?'':'none')});
+
+// Movies catalogue: local watchlist for this browser. This does not alter Firestore membership data.
+const WATCHLIST_KEY='victroStreamWatchlistV1';
+function readWatchlist(){
+ try{return JSON.parse(localStorage.getItem(WATCHLIST_KEY)||'[]').filter(x=>typeof x==='string');}
+ catch(_){return [];}
+}
+function writeWatchlist(items){
+ try{localStorage.setItem(WATCHLIST_KEY,JSON.stringify(items));}
+ catch(_){showInfo('Watchlist unavailable','Your browser could not save this watchlist. Check its local storage settings.');}
+}
+function renderWatchlist(){
+ const saved=readWatchlist(), box=$('#watchlistItems');
+ if(!saved.length){box.innerHTML='<p class="watchlist-empty">Your watchlist is empty. Use the ＋ Watchlist buttons above to save a collection.</p>';}
+ else{
+  box.innerHTML=saved.map(id=>{
+   const card=$(`[data-movie-id="${CSS.escape(id)}"]`);
+   const title=card?card.dataset.title:id;
+   return `<div class="watchlist-item"><strong>${safeText(title)}</strong><button class="btn secondary remove-watch" type="button" data-id="${safeText(id)}">Remove</button></div>`;
+  }).join('');
+ }
+ $$('.movie-card').forEach(card=>{
+  const savedNow=saved.includes(card.dataset.movieId),btn=$('.watch-toggle',card);
+  if(btn){btn.textContent=savedNow?'✓ Saved':'＋ Watchlist';btn.classList.toggle('primary',savedNow);btn.classList.toggle('secondary',!savedNow);}
+ });
+}
+$('#movieGrid').addEventListener('click',e=>{
+ const btn=e.target.closest('.watch-toggle');
+ if(btn){
+  e.preventDefault();e.stopPropagation();
+  const card=btn.closest('.movie-card'),id=card.dataset.movieId,saved=readWatchlist();
+  writeWatchlist(saved.includes(id)?saved.filter(x=>x!==id):[...saved,id]);renderWatchlist();
+ }
+});
+$('#watchlistItems').addEventListener('click',e=>{
+ const btn=e.target.closest('.remove-watch');if(!btn)return;
+ writeWatchlist(readWatchlist().filter(x=>x!==btn.dataset.id));renderWatchlist();
+});
+$('#movieSearch').addEventListener('input',()=>{
+ const q=$('#movieSearch').value.toLowerCase().trim();
+ $$('.movie-card').forEach(card=>card.style.display=(card.dataset.title+' '+card.dataset.category).toLowerCase().includes(q)?'':'none');
+});
+$('#movieSort').addEventListener('change',()=>{
+ const grid=$('#movieGrid'),cards=$$('.movie-card',grid),mode=$('#movieSort').value;
+ cards.sort((a,b)=>mode==='az'?a.dataset.title.localeCompare(b.dataset.title):mode==='za'?b.dataset.title.localeCompare(a.dataset.title):Number(a.dataset.movieId!=='action-collection')-Number(b.dataset.movieId!=='action-collection'));
+ cards.forEach(card=>grid.appendChild(card));
+});
+$$('.movie-card').forEach(card=>card.addEventListener('click',e=>{
+ if(e.target.closest('button'))return;
+ showInfo(card.dataset.title,card.dataset.description+' No film is playing in this demo catalogue.');
+}));
+renderWatchlist();
+
+$$('.card').forEach(c=>c.addEventListener('click',()=>showInfo(c.dataset.title,'This is a sample catalogue item. Authorised playable content can be connected in a later stage.')));
+setMode('login');
+})();
+</script>
+</body>
+</html>
